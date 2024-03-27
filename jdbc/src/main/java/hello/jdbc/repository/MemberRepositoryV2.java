@@ -74,11 +74,14 @@ public class MemberRepositoryV2 {
 
     public Member findById(Connection con, String memberId) throws SQLException {
         String sql = "select * from member where member_id = ?";
+
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+
         try {
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, memberId);
+
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 Member member = new Member();
@@ -124,7 +127,9 @@ public class MemberRepositoryV2 {
     public void update(Connection con, String memberId, int money) throws
             SQLException {
         String sql = "update member set money=? where member_id=?";
+
         PreparedStatement pstmt = null;
+
         try {
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, money);
