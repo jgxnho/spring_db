@@ -40,17 +40,6 @@ public class MemberServiceV3_1 {
         }
     }
 
-    private static void release(Connection con) {
-        if (con != null) {
-            try {
-                con.setAutoCommit(true); //커넥션 풀 고려
-                con.close();
-            } catch (Exception e) {
-                log.info("error: ", e);
-            }
-        }
-    }
-
     private void bizLogic(String fromId, String toId, int money) throws SQLException {
         Member fromMember = memberRepository.findById(fromId);
         Member toMember = memberRepository.findById(toId);
@@ -62,7 +51,7 @@ public class MemberServiceV3_1 {
 
     private void validation(Member toMember) {
         if (toMember.getMemberId().equals("ex")) {
-            throw new IllegalArgumentException("이체 중 예외 발생");
+            throw new IllegalStateException("이체 중 예외 발생");
         }
     }
 }
